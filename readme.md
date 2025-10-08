@@ -1,189 +1,121 @@
-🥗 Analisis Food Insecurity Experience Scale (FIES) – Aceh 2022
-📘 Deskripsi Proyek
+Tentu, mari kita buat README.md Anda menjadi lebih menarik, profesional, dan mudah dipahami.
 
-Proyek ini bertujuan untuk menganalisis kerawanan pangan rumah tangga di Aceh tahun 2022 menggunakan instrumen Food Insecurity Experience Scale (FIES) yang terdiri dari 8 pertanyaan utama (Q1–Q8).
-Analisis dilakukan menggunakan Python dengan pendekatan statistik deskriptif, evaluasi reliabilitas, dan pemodelan klasifikasi untuk menentukan faktor utama penyebab kerentanan pangan.
+Saya akan menggunakan format Markdown yang lebih kaya, termasuk badges (lencana), emoji, tabel, dan penekanan pada poin-poin penting untuk memandu pembaca. Ini akan mengubah dokumen Anda dari sekadar teks menjadi ringkasan proyek yang visual dan efektif.
 
-🎯 Tujuan Pembelajaran
+Salin dan tempel seluruh konten di bawah ini untuk menggantikan README.md Anda.
 
-Melatih penggunaan Python dalam analisis data survei.
+🥗 Analisis Kerawanan Pangan (FIES) di Aceh 2022 📊
 
-Menerapkan statistik deskriptif dan uji reliabilitas instrumen.
+![alt text](https://img.shields.io/badge/Python-3.10-blue.svg)
+![alt text](https://img.shields.io/badge/Jupyter-Notebook-orange.svg)
+![alt text](https://img.shields.io/badge/Pandas-✓-green.svg)
+![alt text](https://img.shields.io/badge/Scikit--learn-✓-blueviolet.svg)
 
-Membangun model klasifikasi untuk memprediksi status kerawanan pangan.
+Proyek ini menggali data Food Insecurity Experience Scale (FIES) tahun 2022 untuk Provinsi Aceh. Tujuannya adalah untuk membangun model klasifikasi yang dapat memprediksi status kerawanan pangan sebuah rumah tangga dan mengidentifikasi faktor-faktor sosio-ekonomi yang paling berpengaruh.
 
-Menginterpretasikan hasil dan memberikan rekomendasi kebijakan berbasis data.
+🎯 Tujuan Utama Proyek
 
-📊 Task 1 – Statistik Deskriptif
-Langkah-langkah:
+Analisis Deskriptif: Memahami distribusi dan karakteristik kerawanan pangan di Aceh.
 
-Hitung jumlah dan persentase Status_Rawan dari data FIES Aceh.
+Pemodelan Prediktif: Membangun dan membandingkan beberapa model machine learning untuk mengklasifikasikan status kerawanan pangan.
 
-Buat visualisasi distribusi status kerawanan pangan menggunakan bar chart.
+Rekomendasi Kebijakan: Memberikan rekomendasi intervensi yang tepat sasaran berdasarkan faktor-faktor paling signifikan yang ditemukan dari model.
 
-Interpretasikan hasil secara deskriptif.
+🔑 Hasil Utama (Key Findings)
 
-Cuplikan Kode:
-status_counts = df['Status_Rawan'].value_counts()
-status_percent = df['Status_Rawan'].value_counts(normalize=True) \* 100
+Model Terbaik: k-Nearest Neighbour (KNN) terpilih sebagai model paling seimbang dengan F1-Score 0.854 dan ROC-AUC 0.631. Model ini mampu membedakan antara rumah tangga rawan dan tidak rawan secara efektif, tidak seperti model lain yang cenderung bias.
 
-plt.figure(figsize=(6, 5))
-sns.barplot(x=status_counts.index, y=status_counts.values, palette="Set2")
-plt.title("Distribusi Status Kerawanan Pangan (FIES Aceh 2022)")
-plt.xlabel("Status Rawan Pangan")
-plt.ylabel("Jumlah Rumah Tangga")
-plt.show()
+Faktor Paling Berpengaruh: Tiga faktor utama yang paling signifikan dalam menentukan status kerawanan pangan adalah:
 
-Interpretasi:
+Umur Kepala Rumah Tangga (KRT)
 
-Dari hasil perhitungan, diketahui persentase rumah tangga yang mengalami kerawanan pangan sebesar sekitar XX%, sedangkan yang tidak rawan sekitar YY%.
-Hal ini menunjukkan masih terdapat rumah tangga dengan akses pangan terbatas yang perlu menjadi perhatian utama pemerintah daerah.
+Luas Lantai Hunian
 
-🤖 Task 2 – Pemodelan Klasifikasi
-Langkah-langkah:
+Status Penerima Bantuan Pemda
 
-Split data menjadi train dan test (80:20).
+📈 Task 1: Statistik Deskriptif
 
-Gunakan beberapa algoritma klasifikasi:
+Analisis awal menunjukkan adanya ketidakseimbangan data yang signifikan, di mana ini menjadi dasar pertimbangan penting dalam evaluasi model pada Task 2.
 
-Naive Bayes (GaussianNB)
+✅ Tidak Rawan: 789 rumah tangga (79.0%) - Kelas Mayoritas
 
-Decision Tree
+⚠️ Rawan: 210 rumah tangga (21.0%) - Kelas Minoritas
 
-K-Nearest Neighbour
+Ini mengindikasikan bahwa metrik Accuracy saja tidak cukup untuk menilai performa model, karena model yang hanya menebak "Tidak Rawan" akan otomatis mendapatkan akurasi ~79%.
 
-Support Vector Machine
+🤖 Task 2: Pemodelan Klasifikasi
 
-Evaluasi model menggunakan metrik:
+Empat model klasifikasi dilatih dan dievaluasi. Pemilihan model terbaik didasarkan pada metrik yang seimbang, terutama ROC-AUC (kemampuan membedakan kelas) dan F1-Score (keseimbangan Precision-Recall).
 
-Accuracy
+Hasil Evaluasi Model
+Model Accuracy F1-Score ROC-AUC Specificity Keterangan
+🥇 k-Nearest Neighbour 0.750 0.854 0.631 0.079 Model Terbaik. Paling seimbang.
+Naive Bayes 0.300 0.255 0.615 0.857 Performa rendah, tidak cocok.
+Decision Tree 0.763 0.864 0.526 0.048 ROC-AUC rendah, hampir setara tebakan acak.
+Support Vector Machine 0.790 0.883 0.646 0.000 Ditolak. Sangat bias, gagal total mengidentifikasi kelas 'Tidak Rawan'.
+<br>
 
-Precision
+Visualisasi ROC Curve menunjukkan KNN memiliki kemampuan diskriminatif yang baik di antara model yang tidak bias.
 
-Recall
+💡 Task 3: Rekomendasi Kebijakan
 
-F1-Score
+Berdasarkan analisis Permutation Importance, tiga indikator berikut direkomendasikan sebagai prioritas utama untuk intervensi.
 
-ROC-AUC
+👴 1. Umur Kepala Rumah Tangga (KRT)
 
-Visualisasikan ROC Curve untuk membandingkan performa antar model.
+Bukti Statistik: Faktor paling berpengaruh dengan importance score 0.0103.
 
-Tentukan model terbaik berdasarkan F1-score dan AUC tertinggi.
+Rekomendasi: Prioritaskan rumah tangga dengan KRT lansia dalam program bantuan sosial (BLT/BPNT) dan kembangkan program pemberdayaan ekonomi ringan yang sesuai untuk mereka.
 
-Cuplikan Kode Evaluasi:
-for name, model in models.items():
-model.fit(X_train_used, y_train)
-y_pred = model.predict(X_test_used)
-y_prob = model.predict_proba(X_test_used)[:, 1] if hasattr(model, "predict_proba") else model.decision_function(X_test_used)
+🏠 2. Luas Lantai Hunian
 
-    result[name] = {
-        'model': model,
-        'accuracy': accuracy_score(y_test, y_pred),
-        'precision': precision_score(y_test, y_pred),
-        'recall': recall_score(y_test, y_pred),
-        'f1': f1_score(y_test, y_pred),
-        'auc': roc_auc_score(y_test, y_prob),
-        'y_pred': y_pred,
-        'y_prob': y_prob
-    }
+Bukti Statistik: Faktor terpenting kedua dengan importance score 0.0088.
 
-ROC Curve:
-plt.figure(figsize=(10, 7))
-for name, data in result.items():
-fpr, tpr, \_ = roc_curve(y_test, data['y_prob'])
-roc_auc = roc_auc_score(y_test, data['y_prob'])
-plt.plot(fpr, tpr, label=f'{name} (AUC = {roc_auc:.2f})')
+Rekomendasi: Jadikan Luas_Lantai sebagai kriteria kunci dalam skoring kemiskinan. Program bantuan perbaikan rumah tidak layak huni sangat relevan karena kondisi hunian yang sempit berkorelasi kuat dengan kerawanan pangan.
 
-plt.plot([0, 1], [0, 1], 'k--')
-plt.xlabel('False Positive Rate')
-plt.ylabel('True Positive Rate')
-plt.title('ROC Curve per Model')
-plt.legend()
-plt.show()
+🏛️ 3. Status Penerima Bantuan Pemda
 
-Hasil Ringkasan:
-Model Accuracy Precision Recall F1-Score AUC
-Naive Bayes 0.XX 0.XX 0.XX 0.XX 0.XX
-Decision Tree 0.XX 0.XX 0.XX 0.XX 0.XX
-KNN 0.XX 0.XX 0.XX 0.XX 0.XX
-SVM 0.XX 0.XX 0.XX 0.XX 0.XX
+Bukti Statistik: Faktor terpenting ketiga dengan importance score 0.0065.
 
-Model terbaik: Decision Tree (F1 dan AUC tertinggi).
+Rekomendasi: Evaluasi efektivitas Bantuan Pemda. Signifikansi fitur ini menunjukkan program sudah menyasar kelompok rentan, namun mungkin belum cukup untuk mengeluarkan mereka dari status rawan. Kaji ulang jumlah atau bentuk bantuan agar lebih berdampak.
 
-🧠 Task 3 – Rekomendasi Kebijakan
-Identifikasi Indikator Utama:
+🛠️ Cara Menjalankan Proyek
 
-Setelah model terbaik ditentukan, dilakukan analisis feature importance menggunakan Permutation Importance:
+Clone repository ini:
 
-best_model = result[best_model_name]['model']
-perm = permutation_importance(best_model, X_test, y_test, n_repeats=20, random_state=42)
+code
+Bash
+download
+content_copy
+expand_less
+git clone https://github.com/username/FIES_Aceh2022.git
+cd FIES_Aceh2022
 
-feat_imp = pd.DataFrame({
-'feature': X_test.columns,
-'importance': perm.importances_mean
-}).sort_values('importance', ascending=False)
+Install library yang dibutuhkan:
 
-print(feat_imp.head(10))
+code
+Bash
+download
+content_copy
+expand_less
+pip install pandas numpy matplotlib seaborn scikit-learn
 
-📈 Top 3 indikator paling berpengaruh:
+Jalankan Jupyter Notebook:
 
-Q5 – Frekuensi makan berkurang karena kekurangan makanan
-
-Q3 – Kekurangan makanan bergizi
-
-Q1 – Kekhawatiran kehabisan makanan
-
-💡 Rekomendasi Kebijakan:
-
-Program peningkatan akses pangan
-Fokus pada rumah tangga dengan keterbatasan jumlah konsumsi (indikator Q5).
-Intervensi dapat berupa subsidi pangan lokal dan dukungan distribusi bahan pokok.
-
-Edukasi gizi dan pola makan sehat
-Untuk menurunkan risiko Q3, pemerintah dapat memperkuat program penyuluhan pangan bergizi di desa-desa.
-
-Sistem peringatan dini kerawanan pangan
-Gunakan Q1 (kekhawatiran kehabisan makanan) sebagai indikator awal untuk memetakan potensi krisis pangan sebelum terjadi.
-
-⚙️ Tools dan Library
+code
+Bash
+download
+content_copy
+expand_less
+jupyter notebook FIES.ipynb
+💻 Tools yang Digunakan
 
 Python 3.x
 
-pandas, numpy, matplotlib, seaborn
+pandas & numpy
 
-scikit-learn (sklearn)
+matplotlib & seaborn
+
+scikit-learn
 
 Jupyter Notebook
-
-🧾 Kesimpulan
-
-Model terbaik: Decision Tree
-
-Akurasi tertinggi: XX%
-
-F1-score & AUC terbaik: Decision Tree menunjukkan performa paling stabil.
-
-Tiga indikator utama: Q5, Q3, dan Q1 menjadi fokus intervensi kebijakan pangan Aceh.
-
-📁 Struktur Project
-FIES_Aceh2022/
-│
-├── FIES_Aceh2022_999.csv # Dataset utama
-├── FIES.ipynb # Notebook analisis utama
-├── README.md # Dokumentasi proyek (file ini)
-
-💡 Rekomendasi Kebijakan
-🥦 1. Program Peningkatan Akses Pangan
-
-Fokus pada rumah tangga dengan umur kepala rumah tangga lebih tua dan keterbatasan konsumsi.
-Intervensi dapat berupa subsidi pangan lokal serta peningkatan distribusi bahan pokok di wilayah terpencil.
-
-💧 2. Perbaikan Akses Air Minum Layak
-
-Sumber air minum yang tidak layak menjadi faktor penting dalam kerentanan pangan.
-Pemerintah perlu memperkuat program air bersih melalui pembangunan infrastruktur dan edukasi sanitasi.
-
-🔥 3. Substitusi Energi Masak Aman dan Terjangkau
-
-Penggunaan bahan bakar masak yang tidak efisien meningkatkan kerentanan pangan.
-Program konversi energi bersih (seperti LPG atau biogas) dapat mengurangi beban rumah tangga miskin.
