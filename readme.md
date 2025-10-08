@@ -88,7 +88,7 @@ Bash
 download
 content_copy
 expand_less
-git clone https://github.com/username/FIES_Aceh2022.git
+git clone https://github.com/MuliaAndiki/FIES-Aceh-tahun-2022.git
 cd FIES_Aceh2022
 
 Install library yang dibutuhkan:
